@@ -1,4 +1,5 @@
 import subprocess
+import os
 
 '''
 Assumes that python and pip is installed and that
@@ -7,16 +8,17 @@ https://github.com/pyenv/pyenv-installer
 '''
 
 directory_name = '{{ cookiecutter.directory_name }}'
+directory_path = os.getcwd()
 virtual_env_name = directory_name + '-env-3.6.8'
 
 # Environment setup
 subprocess.run(["pyenv", "install", "3.6.8"])
 subprocess.run(["pyenv", "virtualenv", "3.6.8", virtual_env_name])
 subprocess.run(["pyenv", "activate", virtual_env_name])
-subprocess.run(["pyenv", "local", virtual_env_name], cwd='./' + directory_name)
+subprocess.run(["pyenv", "local", virtual_env_name], cwd=directory_path)
 
 # Install dependencies
 subprocess.run(["pip", "install", "pytest-watch"])
 subprocess.run(["pip", "install", "opencv-python"])
 subprocess.run(["pip", "install", "numpy"])
-subprocess.run(["pip", "freeze", ">", "requirements.txt"], cwd='./' + directory_name)
+subprocess.run(["pip", "freeze", ">", "requirements.txt"], cwd=directory_path)
